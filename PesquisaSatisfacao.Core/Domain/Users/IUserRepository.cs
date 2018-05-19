@@ -8,6 +8,6 @@ namespace PesquisaSatisfacao.Core.Domain.Users
     public interface IUserRepository
     {
         Task<User> GetBy(string email);
-        Task Add(User user);
+        Task<int> Add(User user);
     }
 }

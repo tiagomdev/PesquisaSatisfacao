@@ -9,11 +9,13 @@ namespace PesquisaSatisfacao.Core.Infrastructure.Database.Repository
 {
     public class UserRepository : BaseDB, IUserRepository
     {
-        public async Task Add(User user)
+        public async Task<int> Add(User user)
         {
             var sql = @"INSERT INTO [User](Email, Name, Password, PasswordSalt)
-                                        VALUES(@Email, @Name, @Password, @PasswordSalt)";
-            await ExecuteAsync(sql, user);
+                                        VALUES(@Email, @Name, @Password, @PasswordSalt)
+                                        SELECT CAST(SCOPE_IDENTITY() as int)";
+            var id = await QueryAsync<int>(sql, user);
+            return id.First();
         }
 
         public async Task<User> GetBy(string email)

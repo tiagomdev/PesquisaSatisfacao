@@ -23,7 +23,8 @@ namespace PesquisaSatisfacao.Web.Controllers
 
         public async Task<IActionResult> List(SurveyListViewModel model)
         {
-            model.Surveys = await service.GetBy(model.BeginDate, model.EndDate);
+            var userId = GetUserId();
+            model.Surveys = await service.GetBy(userId, model.BeginDate, model.EndDate);
             return View(model);
         }
 
@@ -67,7 +68,8 @@ namespace PesquisaSatisfacao.Web.Controllers
         public async Task<IActionResult> CreateQuestion(int surveyId)
         {
             var model = new QuestionCreateViewModel(surveyId);
-            model.Categorys = await service.GetCategorys();
+            var userId = GetUserId();
+            model.Categorys = await service.GetCategorys(userId);
             return PartialView(model);
         }
 
@@ -88,7 +90,8 @@ namespace PesquisaSatisfacao.Web.Controllers
         public async Task<IActionResult> CategoryList()
         {
             var model = new CategoryListViewModel();
-            model.Categorys = await service.GetCategorys();
+            var userId = GetUserId();
+            model.Categorys = await service.GetCategorys(userId);
             return View(model);
         }
 

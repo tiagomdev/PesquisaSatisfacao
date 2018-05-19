@@ -20,9 +20,9 @@ namespace PesquisaSatisfacao.Core.Application
             await repository.Add(survey);
         }
 
-        public async Task<IList<Survey>> GetBy(DateTime? beginDate, DateTime? endDate)
+        public async Task<IList<Survey>> GetBy(int userId, DateTime? beginDate, DateTime? endDate)
         {
-            return await repository.GetBy(beginDate, endDate);
+            return await repository.GetBy(userId, beginDate, endDate);
         }
 
         public async Task Desactive(int id)
@@ -62,7 +62,7 @@ namespace PesquisaSatisfacao.Core.Application
             await repository.AddCategory(category);
         }
 
-        public async Task<IList<QuestionCategory>> GetCategorys() => await repository.GetCategorys();
+        public async Task<IList<QuestionCategory>> GetCategorys(int userId) => await repository.GetCategorys(userId);
 
         #endregion
 

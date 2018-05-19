@@ -35,9 +35,9 @@ namespace PesquisaSatisfacao.Core.Infrastructure.Database.Repository
             return result.ToList();
         }
 
-        public async Task<IList<QuestionCategory>> GetCategorys()
+        public async Task<IList<QuestionCategory>> GetCategorys(int userId)
         {
-            var result = await QueryAsync<QuestionCategory>(@"SELECT * FROM QuestionCategory");
+            var result = await QueryAsync<QuestionCategory>(@"SELECT * FROM QuestionCategory WHERE UserId = @userId", new { userId});
             return result.ToList();
         }
 
@@ -47,16 +47,16 @@ namespace PesquisaSatisfacao.Core.Infrastructure.Database.Repository
             return result.ToList();
         }
 
-        public async Task<IList<Survey>> GetBy(DateTime? beginDate, DateTime? endDate)
+        public async Task<IList<Survey>> GetBy(int userId, DateTime? beginDate, DateTime? endDate)
         {
-            var sql = @"SELECT * FROM Survey WHERE Active=1";
+            var sql = @"SELECT * FROM Survey WHERE Active=1 AND UserId = @userId";
 
             if (beginDate.HasValue)
                 sql += " AND BeginDate = @beginDate";
             if (endDate.HasValue)
                 sql += " AND EndDate = @endDate";
 
-            var result = await QueryAsync<Survey>(sql, new { beginDate, endDate});
+            var result = await QueryAsync<Survey>(sql, new { userId, beginDate, endDate});
             return result.ToList();
         }
 
@@ -72,7 +72,7 @@ namespace PesquisaSatisfacao.Core.Infrastructure.Database.Repository
 			                    FROM Question Q
 				                    INNER JOIN Survey S ON Q.SurveyId = S.Id
 				                    INNER JOIN QuestionCategory C ON Q.CategoryId = C.Id
-					                    WHERE S.Code = @surveyCode";
+					                    WHERE S.Code = @surveyCode AND S.Active = 1";
 
             var result = await QueryAsync<QuestionDTO>(sql, new { surveyCode });
 

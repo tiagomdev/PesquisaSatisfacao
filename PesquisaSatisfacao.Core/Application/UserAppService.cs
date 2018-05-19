@@ -17,7 +17,7 @@ namespace PesquisaSatisfacao.Core.Application
         public async Task<User> CreateUser(User user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
-            await repository.Add(user);
+            user.Id = await repository.Add(user);
             return user;
         }
 
