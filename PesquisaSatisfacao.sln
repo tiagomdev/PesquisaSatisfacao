@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PesquisaSatisfacao.Core", "PesquisaSatisfacao.Core\PesquisaSatisfacao.Core.csproj", "{B9D82B8C-E3D0-412A-848C-EB1519AE0D0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PesquisaSatisfacao.Web", "PesquisaSatisfacao.Web\PesquisaSatisfacao.Web.csproj", "{4CE1922C-99FA-42F8-AA88-A0336C7D3CC8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9D82B8C-E3D0-412A-848C-EB1519AE0D0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9D82B8C-E3D0-412A-848C-EB1519AE0D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9D82B8C-E3D0-412A-848C-EB1519AE0D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9D82B8C-E3D0-412A-848C-EB1519AE0D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE1922C-99FA-42F8-AA88-A0336C7D3CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE1922C-99FA-42F8-AA88-A0336C7D3CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE1922C-99FA-42F8-AA88-A0336C7D3CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE1922C-99FA-42F8-AA88-A0336C7D3CC8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3260856-CE1E-4D0E-981A-199ED55E7513}
+	EndGlobalSection
+EndGlobal

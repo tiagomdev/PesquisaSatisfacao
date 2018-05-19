@@ -1,0 +1,11 @@
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.deps.json
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.dll
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.csprojResolveAssemblyReference.cache
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.csproj.CoreCompileInputs.cache
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.AssemblyInfoInputs.cache
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.AssemblyInfo.cs
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.pdb
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\bin\Debug\netcoreapp2.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\bin\Debug\netcoreapp2.0\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.dll
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Core\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.pdb

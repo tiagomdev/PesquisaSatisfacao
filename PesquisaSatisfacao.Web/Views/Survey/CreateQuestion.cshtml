@@ -1,0 +1,42 @@
+﻿@model PesquisaSatisfacao.Web.Models.Surveys.QuestionCreateViewModel
+
+@using (Html.BeginForm("CreateQuestion", "Survey", FormMethod.Post, new { onsubmit = "return validateForm()", id = "formAddQuestion" }))
+{
+    @Html.HiddenFor(m => m.SurveyId)
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Descricao</label>
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Categoria</label>
+                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categorys, "Id", "Name"), "Selecione", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Salvar</button>
+                    <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+}
+
+<script>
+    $(document).ready(function () {
+            $('#formAddQuestion').ajaxForm(function (result) {
+                if (result.success) {
+                    $("#closeModal").click();
+                    successMessage(result.message);
+                    var surveyId = $("#SurveyId").val();
+                    setTimeout(function () { location.href = "@Url.Action("QuestionList")?surveyId=" + surveyId; }, 2000);
+                } else {
+                    errorMessage(result.message);
+                }
+            });
+        });
+</script>

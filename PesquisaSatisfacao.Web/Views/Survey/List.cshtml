@@ -1,0 +1,170 @@
+﻿@model PesquisaSatisfacao.Web.Models.Surveys.SurveyListViewModel
+
+@{
+    ViewData["Title"] = "Pesquisa Lista";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="page-title">Pesquisas</h1>
+<br />
+@using (Html.BeginForm("List", "Survey", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="clearfix">
+                @Html.TextBoxFor(m => m.BeginDate, new { @class = "form-control", id = "beginDateFilter", @type = "date" })
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="clearfix">
+                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", id = "endDateFilter", @type = "date"})
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <button id="btnSearch" class="btn btn-primary btn-md">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-sm-2">
+        <div class="form-group">
+            <a id="btnAdd" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">Adicionar Pesquisa</a>
+        </div>
+    </div>
+</div>
+<br />
+<div id="listing-ajax-result">
+    @*@Html.Partial("_ReportByProduct")*@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nome</th>
+                <th>Data Inicial</th>
+                <th>Data Final</th>
+                <th class="text-center">Questoes</th>
+                <th class="text-center">Desativar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Surveys != null && Model.Surveys.Count > 0)
+            {
+                foreach (var item in Model.Surveys)
+                {
+                    <tr>
+                        <td>@item.Code</td>
+                        <td>@item.Name</td>
+                        <td>@item.BeginDate.ToString("dd/MM/yyyy")</td>
+                        <td>@item.EndDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center"><a href="@Url.Action("QuestionList", new { surveyId = item.Id})"><span class="glyphicon glyphicon-question-sign"></span></a></td>
+                        <td class="text-center"><a href="#" onclick="desactive(@item.Id)"><span class="glyphicon glyphicon-off"></span></a></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><th colspan="4"><center>Nao foram encontrados registros</center></th></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Adicionar Pesquisa</h4>
+            </div>
+            @using (Html.BeginForm("Create", "Survey", FormMethod.Post, new { onsubmit = "return validateForm()", id = "formAddSurvey" }))
+            {
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Nome</label>
+                                <input class="form-control" type="text" name="Name" id="Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Data Inicial</label>
+                                <input class="form-control" type="date" name="BeginDate" id="BeginDate" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Data Final</label>
+                                <input class="form-control" type="date" name="EndDate" id="EndDate" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Salvar</button>
+                    <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            }
+        </div>
+
+    </div>
+</div>
+
+@section scripts{ 
+    <script>
+        // wait for the DOM to be loaded
+        $(document).ready(function () {
+            // bind 'myForm' and provide a simple callback function
+            $('#formAddSurvey').ajaxForm(function (result) {
+                if (result.success) {
+                    $("#closeModal").click();
+                    successMessage(result.message);
+                    setTimeout(function () { location.href= "@Url.Action("List")"; }, 2000);
+                } else {
+                    errorMessage(result.message);
+                }
+            });
+        });
+
+        function desactive(id) {
+            $.post("@Url.Action("Desactive")", { id: id }, function (result) {
+                if (result.success) {
+                    successMessage(result.message);
+                    setTimeout(function () { location.href= "@Url.Action("List")"; }, 2000);
+                } else {
+                    errorMessage(result.message);
+                }
+             });
+        }
+
+        function validateForm() {
+            var valid = true;
+            if ($("#Name").val() === "") {
+                valid = false;
+                $("#Name").css("border-color", "red");
+            } else {
+                $("#Name").css("border-color", "");
+            }
+
+            if ($("#BeginDate").val() === "") {
+                valid = false;
+                $("#BeginDate").css("border-color", "red");
+            } else {
+                $("#BeginDate").css("border-color", "");
+            }
+
+            if ($("#EndDate").val() === "") {
+                valid = false;
+                $("#EndDate").css("border-color", "red");
+            } else {
+                $("#EndDate").css("border-color", "");
+            }
+
+            return valid;
+        }
+    </script>
+}

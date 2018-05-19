@@ -1,0 +1,13 @@
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.deps.json
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.runtimeconfig.json
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.runtimeconfig.dev.json
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.dll
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.pdb
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.dll
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\bin\Debug\netcoreapp2.0\PesquisaSatisfacao.Core.pdb
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.csprojResolveAssemblyReference.cache
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.csproj.CoreCompileInputs.cache
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.AssemblyInfoInputs.cache
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.AssemblyInfo.cs
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.dll
+C:\Projects\PesquisaSatisfacao\PesquisaSatisfacao.Web\obj\Debug\netcoreapp2.0\PesquisaSatisfacao.Web.pdb

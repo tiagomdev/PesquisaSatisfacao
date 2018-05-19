@@ -1,0 +1,87 @@
+﻿@model PesquisaSatisfacao.Web.Models.Surveys.QuestionListViewModel
+
+@{
+    ViewData["Title"] = "Questao Lista";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="page-title">Questoes</h1>
+<br />
+<div class="row">
+    <div class="col-sm-2">
+        <div class="form-group">
+            <a id="btnAdd" class="btn btn-primary btn-md" data-toggle="modal" onclick="createQuestion()" data-target="#myModal">Adicionar Questao</a>
+        </div>
+    </div>
+</div>
+@Html.HiddenFor(m => m.SurveyId)
+<br />
+<div id="listing-ajax-result">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Descricao</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Questions != null && Model.Questions.Count > 0)
+            {
+                foreach (var item in Model.Questions)
+                {
+                    <tr>
+                        <td>@item.Description</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><th><center>Nao foram encontrados registros</center></th></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Adicionar Questao</h4>
+            </div>
+            <div id="createQuestionModal">
+                <center><b>Carregando.....</b></center>
+                <br />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function createQuestion() {
+            var surveyId = $("#SurveyId").val();
+            $("#createQuestionModal").load("@Url.Action("CreateQuestion")?surveyId=" + surveyId);
+        }
+
+        function validateForm() {
+            var valid = true;
+            if ($("#Description").val() === "") {
+                valid = false;
+                $("#Description").css("border-color", "red");
+            } else {
+                $("#Description").css("border-color", "");
+            }
+
+            if ($("#CategoryId").val() === "") {
+                valid = false;
+                $("#CategoryId").css("border-color", "red");
+            } else {
+                $("#CategoryId").css("border-color", "");
+            }
+
+            return valid;
+        }
+    </script>
+}
