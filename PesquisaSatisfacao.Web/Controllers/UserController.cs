@@ -55,7 +55,7 @@ namespace PesquisaSatisfacao.Web.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { Success = true, ex.Message});
+                return Json(new { Success = false, ex.Message});
             }
         }
 
