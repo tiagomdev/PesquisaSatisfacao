@@ -1,0 +1,68 @@
+﻿@model PesquisaSatisfacao.Web.Models.Surveys.ReportChartViewModel
+
+@{
+    ViewData["Title"] = "Pesquisa Chart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="page-title">Grafico Quantitativo</h1>
+<br />
+<div class="row">
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Pesquisa</label>
+            @Html.DropDownListFor(m => m.SurveyId, new SelectList(Model.Surveys, "Id", "Name"), "Selecione", new { @class = "form-control"})
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Resposta</label>
+            @Html.DropDownListFor(m => m.AnswerId, new SelectList(Model.Answers, "Id", "Description"), "Selecione", new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        <div class="form-group">
+            <button onclick="generate()" id="btnSearch" class="btn btn-primary btn-md">Gerar</button>
+        </div>
+    </div>
+</div>
+<br />
+<div id="reportData">
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        // wait for the DOM to be loaded
+        $(document).ready(function () {
+        });
+
+        function generate()
+        {
+            var valid = true;
+            if ($("#SurveyId").val() === "") {
+                valid = false;
+                $("#SurveyId").css("border-color", "red");
+            } else {
+                $("#SurveyId").css("border-color", "");
+            }
+
+            if ($("#AnswerId").val() === "") {
+                valid = false;
+                $("#AnswerId").css("border-color", "red");
+            } else {
+                $("#AnswerId").css("border-color", "");
+            }
+
+            if (valid) {
+                $("#btnSearch").html("CARREGANDO.....");
+                $("#reportData").load("@Url.Action("_ReportChart")?surveyId=" + $("#SurveyId").val() + "&answerId=" + $("#AnswerId").val(), function(){
+                    $("#btnSearch").html("Gerar");
+                });
+            } else {
+                errorMessage("Preencha todos os campos em vermelho");
+            }
+        }
+    </script>
+}

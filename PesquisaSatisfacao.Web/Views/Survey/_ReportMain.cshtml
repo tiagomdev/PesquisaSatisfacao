@@ -1,0 +1,27 @@
+﻿@model PesquisaSatisfacao.Web.Models.Surveys.ReportMainViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Bom</th>
+            <th>Regular</th>
+            <th>Ruim</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @if (Model.Item != null)
+            {
+                <td>@Model.Item.Bom</td>
+                <td>@Model.Item.Regular</td>
+                <td>@Model.Item.Ruim</td>
+                <td>@Model.Item.Total</td>
+            }
+            else
+            {
+                <th colspan="4"><center>Nao foram encontrados registros</center></th>
+            }
+        </tr>
+    </tbody>
+</table>

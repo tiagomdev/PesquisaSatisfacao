@@ -18,5 +18,7 @@ namespace PesquisaSatisfacao.Core.Domain.Surveys
         Task<IList<QuestionCategory>> GetCategorys(int userId);
         Task<IList<QuestionDTO>> GetQuestionsBy(string surveyCode);
         Task<IList<Answer>> GetAnswers();
+        Task<SurveyReportChartDTO> SurveyChartBy(int surveyId, int month, int answerId);
+        Task<ReportMainDTO> ReportMain(int surveyId, int categoryId);
     }
 }

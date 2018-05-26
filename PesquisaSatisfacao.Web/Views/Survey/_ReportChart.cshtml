@@ -1,0 +1,43 @@
+﻿@model PesquisaSatisfacao.Web.Models.Surveys.ReportChartViewModel
+
+<div class="row">
+    <div class="col-sm-12" id="resultChart">
+        <div id="curve_chart" style="width: 100%;"></div>
+    </div>
+</div>
+
+@if (Model.Items != null && Model.Items.Count > 0)
+{
+    <script>
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+
+            var chartData;
+
+            function drawChart() {
+                chartData = google.visualization.arrayToDataTable([
+                    ["Mes", "Percentual"],
+                    @foreach(var item in Model.Items)
+                    {
+                        @Html.Raw(string.Format("['Mes: {0}', {1}],", item.Month, item.Percent));
+                    }
+                ]);
+
+                var options = {
+                    curveType: 'function',
+                    chartArea: { left: '10%', top: "10%", width: '90%' },
+                    legend: { position: 'bottom' }
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('curve_chart'));
+
+                chart.draw(chartData, options);
+            }
+    </script>
+}
+else
+{
+    <script>
+            $("#resultChart").html("<h3><center> Não foram encontrados dados para esse relátorio</center></h3>")
+    </script>
+}

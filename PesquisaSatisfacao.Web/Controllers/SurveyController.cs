@@ -133,5 +133,37 @@ namespace PesquisaSatisfacao.Web.Controllers
                 return Json(new { Success = false, ex.Message });
             }
         }
+
+        public async Task<IActionResult> ReportChart()
+        {
+            var model = new ReportChartViewModel();
+            var userId = GetUserId();
+            model.Surveys = await service.GetBy(userId, null, null);
+            model.Answers = await service.GetAnswers();
+            return View(model);
+        }
+
+        public async Task<IActionResult> _ReportChart(int surveyId, int answerId)
+        {
+            var model = new ReportChartViewModel();
+            model.Items = await service.SurveyChartBy(surveyId, answerId);
+            return PartialView(model);
+        }
+
+        public async Task<IActionResult> ReportMain()
+        {
+            var model = new ReportMainViewModel();
+            var userId = GetUserId();
+            model.Categorys = await service.GetCategorys(userId);
+            model.Surveys = await service.GetBy(userId, null, null);
+            return View(model);
+        }
+
+        public async Task<IActionResult> _ReportMain(int surveyId, int categoryId)
+        {
+            var model = new ReportMainViewModel();
+            model.Item = await service.ReportMain(surveyId, categoryId);
+            return PartialView(model);
+        }
     }
 }

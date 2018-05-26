@@ -29,15 +29,15 @@ namespace PesquisaSatisfacao.Core.Infrastructure.Database.Repository
             await ExecuteAsync(sql, category);
         }
 
-        public async Task<IList<Survey>> GetAll()
+        public async Task<IList<Survey>> GetAll(int userId)
         {
-            var result =  await QueryAsync<Survey>(@"SELECT * FROM Survey");
+            var result = await QueryAsync<Survey>(@"SELECT * FROM Survey WHERE UserId = @userId", new { userId });
             return result.ToList();
         }
 
         public async Task<IList<QuestionCategory>> GetCategorys(int userId)
         {
-            var result = await QueryAsync<QuestionCategory>(@"SELECT * FROM QuestionCategory WHERE UserId = @userId", new { userId});
+            var result = await QueryAsync<QuestionCategory>(@"SELECT * FROM QuestionCategory WHERE UserId = @userId", new { userId });
             return result.ToList();
         }
 
@@ -56,7 +56,7 @@ namespace PesquisaSatisfacao.Core.Infrastructure.Database.Repository
             if (endDate.HasValue)
                 sql += " AND EndDate = @endDate";
 
-            var result = await QueryAsync<Survey>(sql, new { userId, beginDate, endDate});
+            var result = await QueryAsync<Survey>(sql, new { userId, beginDate, endDate });
             return result.ToList();
         }
 
@@ -88,8 +88,55 @@ namespace PesquisaSatisfacao.Core.Infrastructure.Database.Repository
 
         public async Task AddQuestionAnswer(QuestionAnswer questionAnswer)
         {
-            var sql = @"INSERT INTO QuestionAnswer(QuestionId, AnswerId) VALUES(@QuestionId, @AnswerId)";
+            var sql = @"INSERT INTO QuestionAnswer(QuestionId, AnswerId, CreatedOn) VALUES(@QuestionId, @AnswerId, @CreatedOn)";
             await ExecuteAsync(sql, questionAnswer);
+        }
+
+        public async Task<SurveyReportChartDTO> SurveyChartBy(int surveyId, int month, int answerId)
+        {
+            var sql = @"SELECT COUNT(QA.Id) AS Amount, (SELECT COUNT(QA.Id)
+				                     FROM QuestionAnswer QA
+					                    INNER JOIN Question Q ON QA.QuestionId = Q.Id
+					                    INNER JOIN Survey S ON Q.SurveyId = S.Id
+						                    WHERE MONTH(QA.CreatedOn) = @month AND S.Id = @surveyId) AS Total, MONTH(QA.CreatedOn) AS [Month]
+		                    FROM QuestionAnswer QA
+					                    INNER JOIN Question Q ON QA.QuestionId = Q.Id
+					                    INNER JOIN Survey S ON Q.SurveyId = S.Id
+						                    WHERE MONTH(QA.CreatedOn) = @month AND QA.AnswerId = @answerId AND S.Id = @surveyId
+							                    GROUP BY MONTH(QA.CreatedOn)";
+
+            var result = await QueryAsync<SurveyReportChartDTO>(sql, new { surveyId, month, answerId });
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<ReportMainDTO> ReportMain(int surveyId, int categoryId)
+        {
+            var sql = @"SELECT  COUNT(QA.Id) AS Total,
+	                            (SELECT COUNT(QA.Id)
+		                                FROM QuestionAnswer QA
+					                                INNER JOIN Question Q ON QA.QuestionId = Q.Id
+					                                INNER JOIN Survey S ON Q.SurveyId = S.Id
+						                                WHERE QA.AnswerId = 3 AND S.Id = @surveyId AND Q.CategoryId = @categoryId) AS Ruim,
+			                            (SELECT COUNT(QA.Id)
+				                            FROM QuestionAnswer QA
+							                            INNER JOIN Question Q ON QA.QuestionId = Q.Id
+							                            INNER JOIN Survey S ON Q.SurveyId = S.Id
+								                            WHERE QA.AnswerId = 2 AND S.Id = @surveyId AND Q.CategoryId = @categoryId) AS Regular,
+			                            (SELECT COUNT(QA.Id)
+				                            FROM QuestionAnswer QA
+							                            INNER JOIN Question Q ON QA.QuestionId = Q.Id
+							                            INNER JOIN Survey S ON Q.SurveyId = S.Id
+								                            WHERE QA.AnswerId = 1 AND S.Id = @surveyId AND Q.CategoryId = @categoryId) AS Bom
+	                            FROM QuestionAnswer QA
+			                            INNER JOIN Question Q ON QA.QuestionId = Q.Id
+			                            INNER JOIN Survey S ON Q.SurveyId = S.Id
+				                            WHERE S.Id = @surveyId AND S.Active = 1
+					                            AND Q.CategoryId = @categoryId";
+
+            var result = await QueryAsync<ReportMainDTO>(sql, new { surveyId, categoryId });
+
+            return result.FirstOrDefault();
         }
     }
 }

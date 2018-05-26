@@ -76,5 +76,36 @@ namespace PesquisaSatisfacao.Core.Application
                 await repository.AddQuestionAnswer(item);
             }
         }
+
+        public async Task<IList<SurveyReportChartDTO>> SurveyChartBy(int surveyId, int answerId)
+        {
+            if (surveyId == default(int)) throw new ArgumentNullException(nameof(surveyId));
+            if (answerId == default(int)) throw new ArgumentNullException(nameof(answerId));
+
+            var results = new List<SurveyReportChartDTO>();
+
+            if(DateTime.Now.Month < 3)
+            {
+                var result = await repository.SurveyChartBy(surveyId, DateTime.Now.Month, answerId);
+                if (result != null) results.Add(result);
+            }
+            else
+            {
+                for (var i = DateTime.Now.AddMonths(-3).Month; i <= DateTime.Now.Month; i++)
+                {
+                    var result = await repository.SurveyChartBy(surveyId, i, answerId);
+                    if (result != null) results.Add(result);
+                }
+            }
+            return results;
+        }
+
+        public async Task<ReportMainDTO> ReportMain(int surveyId, int categoryId)
+        {
+            if (surveyId == default(int)) throw new ArgumentNullException(nameof(surveyId));
+            if (categoryId == default(int)) throw new ArgumentNullException(nameof(categoryId));
+
+            return await repository.ReportMain(surveyId, categoryId);
+        }
     }
 }
